@@ -73,52 +73,7 @@ echo "### Instalando Tailscale"
 curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
-# ---------------------------------------------------
-echo "### Creando archivo manual"
-MANUAL="/root/MANUAL_DOLIBARR.txt"
-sudo bash -c "cat > ${MANUAL}" <<EOL
-Dolibarr 21.0.0 en Ubuntu 18.04 LTS
--------------------------------------
 
-1. Servidor web: Apache 2.4
-   DocumentRoot: ${DOLI_ROOT}/htdocs
-   VirtualHost: /etc/apache2/sites-available/dolibarr.conf
-
-2. Base de datos: MySQL
-   Usuario: ${DOLI_USER}
-   Contraseña: ${DOLI_PASS}
-   Base de datos: ${DOLI_DB}
-   Puerto: 3306
-   Charset: utf8
-
-3. Permisos:
-   Directorios: 755
-   Archivos: 644
-   Propietario: www-data:www-data
-
-4. Acceso remoto seguro con Tailscale:
-   - Instalar Tailscale en servidor y dispositivos externos
-   - Conectar con la misma cuenta
-   - Obtener IP de Tailscale:
-     tailscale ip -4
-   - Acceso vía navegador:
-     http://<IP_TAILSCALE>/
-
-5. Archivo de configuración Dolibarr: ${DOLI_ROOT}/htdocs/conf/conf.php
-   Configurar:
-     \$dolibarr_main_url_root='http://<IP_TAILSCALE>/';
-     \$dolibarr_main_document_root='${DOLI_ROOT}/htdocs';
-     \$dolibarr_main_data_root='${DOLI_DOCS}';
-     \$dolibarr_main_db_host='localhost';
-     \$dolibarr_main_db_name='${DOLI_DB}';
-     \$dolibarr_main_db_user='${DOLI_USER}';
-     \$dolibarr_main_db_pass='${DOLI_PASS}';
-
-6. Reiniciar Apache si se hacen cambios:
-   sudo systemctl restart apache2
-
--------------------------------------
-Manual generado automáticamente.
 EOL
 
 echo "### ¡Instalación y configuración completadas!"
